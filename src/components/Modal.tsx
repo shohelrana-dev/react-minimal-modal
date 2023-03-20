@@ -20,11 +20,9 @@ export default function Modal( props: ModalProps ){
         <header className={ classes.header }>
             <h3 className={ classes.title }>{ title }</h3>
             { ! hideIcon ? (
-                <div>
-                    <button onClick={ toggle } className={ classes.icon }>
-                        <CancelIcon size="20"/>
-                    </button>
-                </div>
+                <button onClick={ toggle } className={ classes.icon }>
+                    <CancelIcon size="20"/>
+                </button>
             ) : null }
         </header>
     ) : null

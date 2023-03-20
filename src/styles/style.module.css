@@ -32,23 +32,20 @@
 .header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding-bottom: 4px;
+    align-items: start;
 }
 
 .title {
     font-size: 20px;
     font-weight: 600;
     color: #000000c9;
-    margin: 0 0 14px;
+    margin: 0 0 10px;
 }
 
 .icon {
-    margin: 0;
     cursor: pointer;
     border-radius: 50%;
     border: none;
-    padding: 6px;
     color: rgb(233 30 99);
     height: 32px;
     width: 32px;
@@ -56,6 +53,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: -4px 0 0;
     background: #fff !important;
     transition-property: all;
     transition-timing-function: cubic-bezier(.4,0,.2,1);
