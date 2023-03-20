@@ -11,8 +11,9 @@
   "author": "Shohel Rana",
   "repository": {
     "type": "git",
-    "url": "https://github.com/reactjs/react-minimal-modal.git"
+    "url": "https://github.com/shohelrana-dev/react-minimal-modal"
   },
+  "homepage": "https://github.com/shohelrana-dev/react-minimal-modal",
   "dependencies": {
     "framer-motion": "^10.6.0",
     "react": "^18.2.0",
@@ -37,9 +38,8 @@
   },
   "keywords": [
     "react",
-    "npm",
-    "typescript",
-    "npm package",
-    "react modal"
+    "react-component",
+    "modal",
+    "dialog"
   ]
 }
