@@ -37,14 +37,14 @@
 }
 
 .title {
-    margin: 0;
     font-size: 20px;
     font-weight: 600;
     color: #000000c9;
+    margin: 0 0 14px;
 }
 
 .icon {
-    margin-right: 0.25rem;
+    margin: 0;
     cursor: pointer;
     border-radius: 50%;
     border: none;
