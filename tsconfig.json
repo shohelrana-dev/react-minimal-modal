@@ -3,11 +3,6 @@
     "outDir": "dist/esm",
     "module": "esnext",
     "target": "es5",
-    "plugins": [
-      {
-        "name": "typescript-plugin-css-modules"
-      }
-    ],
     "lib": [
       "es6",
       "dom",
