@@ -18,7 +18,7 @@ export default function Component() {
         <div>
             <button onClick={toggle}>Open Modal</button>
             <Modal
-                isVisible={isVisible}
+                visible={isVisible}
                 toggle={toggle}
                 title="Hello"
             >

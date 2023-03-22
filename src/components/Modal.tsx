@@ -5,7 +5,7 @@ import { createPortal } from "react-dom"
 import classes from "../styles/style.module.css"
 
 export interface ModalProps {
-    isVisible: boolean,
+    visible: boolean,
     toggle: () => void
     title?: string
     className?: string
@@ -14,7 +14,9 @@ export interface ModalProps {
 }
 
 export default function Modal( props: ModalProps ){
-    const { isVisible, toggle, title, children, hideIcon, className = '' } = props
+    const { visible, toggle, title, children, hideIcon, className = '' } = props
+
+    if( typeof window === "undefined" ) return null
 
     const headerMarkup = ! hideIcon || title ? (
         <header className={ classes.header }>
@@ -29,7 +31,7 @@ export default function Modal( props: ModalProps ){
 
     const component = (
         <AnimatePresence>
-            { isVisible ? (
+            { visible ? (
                 <div className={ classes.modal }>
                     <motion.div
                         className={ classes.darkOverlay }

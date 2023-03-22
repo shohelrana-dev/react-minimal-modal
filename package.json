@@ -1,12 +1,13 @@
 {
   "name": "react-minimal-modal",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "license": "MIT",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
   "main": "./dist/index.js",
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "dev": "rollup -cw"
   },
   "author": "Shohel Rana",
   "repository": {
