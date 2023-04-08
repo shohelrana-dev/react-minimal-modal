@@ -8,11 +8,11 @@ To install, you can use [npm](https://npmjs.org/) or [yarn](https://yarnpkg.com)
 Here is a simple example of react-minimal-modal being used in a component:
 
 ```jsx
-import React from 'react';
-import Modal, { useModal } from 'react-minimal-modal';
+import React from 'react'
+import Modal, { useModal } from 'react-minimal-modal'
 
 export default function Component() {
-    const {isVisible, toggle} = useModal();
+    const {isVisible, toggle} = useModal()
 
     return (
         <div>
@@ -25,6 +25,6 @@ export default function Component() {
                 <div>I am a modal</div>
             </Modal>
         </div>
-    );
+    )
 }
 ```
