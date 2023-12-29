@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react"
+import { ReactNode } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { RxCross2 as CancelIcon } from "react-icons/rx"
 import { createPortal } from "react-dom"
