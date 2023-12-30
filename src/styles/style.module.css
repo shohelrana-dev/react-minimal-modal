@@ -1,11 +1,13 @@
 .modal {
     position: fixed;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     top: 0;
     left: 0;
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
     justify-content: center;
     z-index: 99;
 }
@@ -21,7 +23,7 @@
 
 .popup {
     border-radius: 10px;
-    max-width: 530px;
+    max-width: 550px;
     width: 90%;
     padding: 20px;
     border: 1px solid #ddd;
