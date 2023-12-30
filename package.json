@@ -1,6 +1,7 @@
 {
   "name": "react-minimal-modal",
-  "version": "1.2.0",
+  "description": "A react minimal modal library",
+  "version": "1.2.1",
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.es.js",
