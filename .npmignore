@@ -1,4 +1,5 @@
 /node_modules
 /src
+rollup.config.mjs
 tsconfig.json
 yarn.lock
