@@ -1,5 +1,7 @@
 /node_modules
 /src
+/storybook-static
+/.storybook
 rollup.config.mjs
 tsconfig.json
 yarn.lock
