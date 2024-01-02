@@ -1,84 +1,70 @@
-import { ReactNode } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { RxCross2 as CancelIcon } from 'react-icons/rx'
+import { HTMLAttributes, ReactNode, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import classes from '../styles/style.module.css'
+import { Header, Title, IconButton, CancelIcon, ModalContainer, DarkOverlay, Popup } from './Elements'
 
-export interface ModalProps {
+export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
     visible: boolean
     toggle: () => void
     title?: string
-    className?: string
+    header?: ReactNode
+    titleFontSize?: number
     wrapperClassName?: string
     hideIcon?: boolean
-    children: ReactNode
     position?: 'center' | 'top'
-    width?: string
+    width?: number
 }
 
 export default function Modal(props: ModalProps) {
-    const {
-        visible,
-        toggle,
-        title,
-        children,
-        hideIcon,
-        position,
-        width = '550px',
-        className = '',
-        wrapperClassName = '',
-    } = props
+    const { visible, toggle, title, titleFontSize, header, children, hideIcon, position, wrapperClassName, ...restProps } = props
+
+    const [delayVisible, setDelayVisible] = useState(visible)
+
+    useEffect(() => {
+        if (delayVisible) {
+            setTimeout(() => setDelayVisible(visible), 500)
+            return
+        }
+        setDelayVisible(visible)
+    }, [visible])
 
     if (typeof window === 'undefined') return null
 
     const headerMarkup =
         !hideIcon || title ? (
-            <header className={classes.header}>
-                <h3 className={classes.title}>{title}</h3>
-                {!hideIcon ? (
-                    <button
-                        onClick={toggle}
-                        className={classes.icon}
-                    >
-                        <CancelIcon size='20' />
-                    </button>
-                ) : null}
-            </header>
+            <Header>
+                {header ? header : <Title fontSize={titleFontSize}>{title}</Title>}
+
+                {hideIcon ? null : (
+                    <IconButton onClick={toggle}>
+                        <CancelIcon />
+                    </IconButton>
+                )}
+            </Header>
         ) : null
 
     const component = (
-        <AnimatePresence>
-            {visible ? (
-                <div
-                    className={`${classes.modal} ${wrapperClassName}`}
-                    style={{
-                        justifyContent:
-                            position === 'top' ? 'flex-start' : 'center',
-                    }}
+        <>
+            {delayVisible ? (
+                <ModalContainer
+                    className={wrapperClassName}
+                    position={position}
                 >
-                    <motion.div
-                        className={classes.darkOverlay}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.2 }}
+                    <DarkOverlay
                         onClick={toggle}
+                        exit={!visible}
                     />
-                    <motion.div
-                        className={`${classes.popup} ${className}`}
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        transition={{ duration: 0.3 }}
-                        style={{ maxWidth: width }}
+                    {/* @ts-ignore */}
+                    <Popup
+                        exit={!visible}
+                        {...restProps}
                     >
                         {headerMarkup}
 
                         {children}
-                    </motion.div>
-                </div>
+                    </Popup>
+                </ModalContainer>
             ) : null}
-        </AnimatePresence>
+        </>
     )
 
     return createPortal(component, document.body)

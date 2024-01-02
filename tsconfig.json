@@ -1,10 +1,9 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
+    "outDir": "./dist",
     "module": "esnext",
     "target": "ESNext",
     "lib": ["es6", "dom"],
-    "declaration": true,
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
