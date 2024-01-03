@@ -17,9 +17,7 @@
     "jsx": "react-jsx",
     "strict": true
   },
-  "include": [
-    "src"
-, "rollup.config.mjs"  ],
+  "include": [ "src" ],
   "exclude": [
     "node_modules",
     "dist"

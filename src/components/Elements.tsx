@@ -42,7 +42,7 @@ export const ModalContainer = styled.div<{ position?: 'center' | 'top' }>`
     flex-wrap: wrap;
     flex-direction: column;
     align-content: center;
-    z-index: 99;
+    z-index: 9999;
     justify-content: ${({ position = 'center' }) => (position === 'top' ? 'flex-start' : 'center')};
 `
 
@@ -53,7 +53,7 @@ export const DarkOverlay = styled.div<{ exit: boolean }>`
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 10;
+    z-index: 9999;
     opacity: 0;
     ${({ exit }) =>
         css`
@@ -67,7 +67,7 @@ export const Popup = styled.div<{ width?: number; exit: boolean }>`
     padding: 20px;
     border: 1px solid #ddd;
     background: #fff;
-    z-index: 999;
+    z-index: 99999;
     opacity: 0;
     transform: translateY(-15px);
     max-width: ${({ width = 550 }) => `${width}px`};
