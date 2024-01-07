@@ -3,6 +3,8 @@ To install, you can use [npm](https://npmjs.org/) or [yarn](https://yarnpkg.com)
     $ npm install --save react-minimal-modal
     $ yarn add react-minimal-modal
 
+### [Live demo](https://react-minimal-modal.netlify.app)
+
 ## Examples
 
 Here is a simple example of react-minimal-modal being used in a component:
