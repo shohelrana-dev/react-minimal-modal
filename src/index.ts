@@ -1,4 +1,4 @@
 import Modal from './components/Modal'
-import useModal from './hooks/useModal'
+import useToggle from './hooks/useToggle'
 
-export { Modal, Modal as default, useModal }
+export { Modal, Modal as default, useToggle }

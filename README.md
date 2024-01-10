@@ -10,17 +10,16 @@ To install, you can use [npm](https://npmjs.org/) or [yarn](https://yarnpkg.com)
 Here is a simple example of react-minimal-modal being used in a component:
 
 ```jsx
-import React from 'react'
-import Modal, { useModal } from 'react-minimal-modal'
+import Modal, { useToggle } from 'react-minimal-modal'
 
 export default function Component() {
-    const {isVisible, toggle} = useModal()
+    const [isOpen, toggle] = useToggle()
 
     return (
         <div>
             <button onClick={toggle}>Open Modal</button>
             <Modal
-                visible={isVisible}
+                visible={isOpen}
                 toggle={toggle}
                 title="Hello"
             >
