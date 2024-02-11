@@ -1,7 +1,7 @@
 import { ComponentProps, ReactNode, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import CancelIcon from './CancelIcon'
-import './modal.css'
+import './Modal.css'
 
 export interface ModalProps extends ComponentProps<'div'> {
    open: boolean
@@ -28,6 +28,7 @@ export default function Modal(props: ModalProps) {
       children,
       hideIcon,
       position,
+      className,
       wrapperClassName,
       ...restProps
    } = props
@@ -69,6 +70,9 @@ export default function Modal(props: ModalProps) {
    if (position) containerClasses.push(`modal__position-${position}`)
    if (wrapperClassName) containerClasses.push(wrapperClassName)
 
+   const modalClasses = ['modal__popup']
+   if (className) modalClasses.push(className)
+
    const headerMarkup =
       !hideIcon || title ? (
          <header className="modal__header">
@@ -86,7 +90,7 @@ export default function Modal(props: ModalProps) {
       <div className={containerClasses.join(' ')}>
          <div onClick={handleClose} className="modal__backdrop" />
 
-         <div className={'modal__popup'} {...restProps}>
+         <div className={modalClasses.join(' ')} {...restProps}>
             {headerMarkup}
 
             <div className="modal__body">{children}</div>
