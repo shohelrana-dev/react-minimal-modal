@@ -1,11 +1,11 @@
 import { useState } from 'react'
 
-export default function useToggle(defaultActivity = false): [boolean, () => void] {
-	const [isActive, setIsActive] = useState(defaultActivity)
+export default function useToggle(defaultActive = false): [boolean, () => void] {
+   const [isActive, setIsActive] = useState(defaultActive)
 
-	function toggle() {
-		setIsActive(!isActive)
-	}
+   function toggle() {
+      setIsActive(!isActive)
+   }
 
-	return [isActive, toggle]
+   return [isActive, toggle]
 }

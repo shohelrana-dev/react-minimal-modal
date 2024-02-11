@@ -1,84 +1,99 @@
-import { HTMLAttributes, ReactNode, useEffect, useState } from 'react'
+import { ComponentProps, ReactNode, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { Header, Title, IconButton, CancelIcon, ModalContainer, DarkOverlay, Popup } from './Elements'
+import {
+   CancelIcon,
+   DarkOverlay,
+   Header,
+   IconButton,
+   ModalBody,
+   ModalContainer,
+   Popup,
+   Title,
+} from './Elements'
 
-export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
-	open: boolean
-	toggle?: () => void
-	onClose?: () => void
-	title?: string
-	header?: ReactNode
-	titleFontSize?: number
-	wrapperClassName?: string
-	hideIcon?: boolean
-	position?: 'center' | 'top'
-	width?: number
+export interface ModalProps extends ComponentProps<'div'> {
+   open: boolean
+   toggle?: () => void
+   onClose?: () => void
+   title?: string
+   header?: ReactNode
+   footer?: ReactNode
+   titleFontSize?: number
+   wrapperClassName?: string
+   hideIcon?: boolean
+   position?: 'center' | 'top'
+   width?: number
+   onOpenChange?: (open: boolean) => void
 }
 
 export default function Modal(props: ModalProps) {
-	const {
-		open,
-		toggle,
-		onClose,
-		title,
-		titleFontSize,
-		header,
-		children,
-		hideIcon,
-		position,
-		wrapperClassName,
-		...restProps
-	} = props
+   const {
+      open,
+      toggle,
+      onClose,
+      onOpenChange,
+      title,
+      footer,
+      titleFontSize,
+      header,
+      children,
+      hideIcon,
+      position,
+      wrapperClassName,
+      ...restProps
+   } = props
+   const [isClose, setIsClose] = useState(false)
 
-	const [delayOpen, setDelayOpen] = useState(open)
+   useEffect(() => {
+      if (open) return setIsClose(false)
 
-	useEffect(() => {
-		if (delayOpen) {
-			setTimeout(() => setDelayOpen(open), 500)
-			return
-		}
-		setDelayOpen(open)
-	}, [open])
+      const timerId = setTimeout(() => {
+         setIsClose(true)
+      }, 500)
 
-	function handleClose() {
-		if (typeof toggle === 'function') {
-			toggle()
-		}
-		if (typeof onClose === 'function') {
-			onClose()
-		}
-	}
+      return () => clearTimeout(timerId)
+   }, [open])
 
-	if (typeof window === 'undefined') return null
+   function handleClose() {
+      if (typeof toggle === 'function') {
+         toggle()
+      }
+      if (typeof onClose === 'function') {
+         onClose()
+      }
+      if (typeof onOpenChange === 'function') {
+         onOpenChange(false)
+      }
+   }
 
-	const headerMarkup =
-		!hideIcon || title ? (
-			<Header>
-				{header ? header : <Title fontSize={titleFontSize}>{title}</Title>}
+   if (typeof window === 'undefined' || isClose) return null
 
-				{hideIcon ? null : (
-					<IconButton onClick={handleClose}>
-						<CancelIcon />
-					</IconButton>
-				)}
-			</Header>
-		) : null
+   const headerMarkup =
+      !hideIcon || title ? (
+         <Header>
+            {header ? header : <Title fontSize={titleFontSize}>{title}</Title>}
 
-	const component = (
-		<>
-			{delayOpen ? (
-				<ModalContainer className={wrapperClassName} position={position}>
-					<DarkOverlay onClick={handleClose} exit={!open} />
-					{/* @ts-ignore */}
-					<Popup exit={!open} {...restProps}>
-						{headerMarkup}
+            {hideIcon ? null : (
+               <IconButton onClick={handleClose}>
+                  <CancelIcon />
+               </IconButton>
+            )}
+         </Header>
+      ) : null
 
-						{children}
-					</Popup>
-				</ModalContainer>
-			) : null}
-		</>
-	)
+   const component = (
+      <ModalContainer className={wrapperClassName} position={position}>
+         <DarkOverlay onClick={handleClose} exit={!open} />
 
-	return createPortal(component, document.body)
+         <Popup exit={!open} {...restProps}>
+            {headerMarkup}
+
+            <ModalBody>{children}</ModalBody>
+
+            {!!footer && <footer>{footer}</footer>}
+         </Popup>
+      </ModalContainer>
+   )
+
+   return createPortal(component, document.body)
 }
