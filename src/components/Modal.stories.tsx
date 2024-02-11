@@ -28,12 +28,10 @@ export const Default: Story = {
             versions of Lorem Ipsum.
          </div>
       ),
-      titleFontSize: 22,
       position: 'center',
-      width: 550,
       hideIcon: false,
    },
-   render: ({ title, children, footer, position, width, hideIcon, open, titleFontSize }) => {
+   render: ({ title, children, footer, position, hideIcon, open }) => {
       const [isOpen, toggle] = useToggle(open)
 
       useEffect(() => {
@@ -52,8 +50,6 @@ export const Default: Story = {
                children={children}
                footer={footer}
                position={position}
-               width={width}
-               titleFontSize={titleFontSize}
                hideIcon={hideIcon}
             />
          </>

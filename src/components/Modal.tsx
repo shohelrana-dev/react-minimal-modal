@@ -1,15 +1,7 @@
 import { ComponentProps, ReactNode, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import {
-   CancelIcon,
-   DarkOverlay,
-   Header,
-   IconButton,
-   ModalBody,
-   ModalContainer,
-   Popup,
-   Title,
-} from './Elements'
+import CancelIcon from './CancelIcon'
+import './modal.css'
 
 export interface ModalProps extends ComponentProps<'div'> {
    open: boolean
@@ -18,11 +10,9 @@ export interface ModalProps extends ComponentProps<'div'> {
    title?: string
    header?: ReactNode
    footer?: ReactNode
-   titleFontSize?: number
    wrapperClassName?: string
    hideIcon?: boolean
    position?: 'center' | 'top'
-   width?: number
    onOpenChange?: (open: boolean) => void
 }
 
@@ -34,7 +24,6 @@ export default function Modal(props: ModalProps) {
       onOpenChange,
       title,
       footer,
-      titleFontSize,
       header,
       children,
       hideIcon,
@@ -42,7 +31,7 @@ export default function Modal(props: ModalProps) {
       wrapperClassName,
       ...restProps
    } = props
-   const [isClose, setIsClose] = useState(false)
+   const [isClosed, setIsClosed] = useState(!open)
 
    useEffect(() => {
       if (open) {
@@ -57,54 +46,54 @@ export default function Modal(props: ModalProps) {
    }, [open])
 
    useEffect(() => {
-      if (open) return setIsClose(false)
+      if (open) return setIsClosed(false)
 
       const timerId = setTimeout(() => {
-         setIsClose(true)
+         setIsClosed(true)
       }, 500)
 
       return () => clearTimeout(timerId)
    }, [open])
 
    function handleClose() {
-      if (typeof toggle === 'function') {
-         toggle()
-      }
-      if (typeof onClose === 'function') {
-         onClose()
-      }
-      if (typeof onOpenChange === 'function') {
-         onOpenChange(false)
-      }
+      if (toggle) toggle()
+      if (onClose) onClose()
+      if (onOpenChange) onOpenChange(false)
    }
 
-   if (typeof window === 'undefined' || isClose) return null
+   if (typeof window === 'undefined' || (!open && isClosed)) return null
+
+   //merge classes
+   const containerClasses = ['modal']
+   if (open) containerClasses.push('modal__open')
+   if (position) containerClasses.push(`modal__position-${position}`)
+   if (wrapperClassName) containerClasses.push(wrapperClassName)
 
    const headerMarkup =
       !hideIcon || title ? (
-         <Header>
-            {header ? header : <Title fontSize={titleFontSize}>{title}</Title>}
+         <header className="modal__header">
+            {header ? header : <h3 className="modal__title">{title}</h3>}
 
             {hideIcon ? null : (
-               <IconButton onClick={handleClose}>
+               <button onClick={handleClose} className="modal__close-button">
                   <CancelIcon />
-               </IconButton>
+               </button>
             )}
-         </Header>
+         </header>
       ) : null
 
    const component = (
-      <ModalContainer className={wrapperClassName} position={position}>
-         <DarkOverlay onClick={handleClose} exit={!open} />
+      <div className={containerClasses.join(' ')}>
+         <div onClick={handleClose} className="modal__backdrop" />
 
-         <Popup exit={!open} {...restProps}>
+         <div className={'modal__popup'} {...restProps}>
             {headerMarkup}
 
-            <ModalBody>{children}</ModalBody>
+            <div className="modal__body">{children}</div>
 
             {!!footer && <footer>{footer}</footer>}
-         </Popup>
-      </ModalContainer>
+         </div>
+      </div>
    )
 
    return createPortal(component, document.body)

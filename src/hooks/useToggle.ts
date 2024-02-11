@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-export default function useToggle(defaultActive = false): [boolean, () => void] {
-   const [isActive, setIsActive] = useState(defaultActive)
+export default function useToogle(initialActive = false): [boolean, () => void] {
+   const [isActive, setIsActive] = useState(initialActive)
 
    function toggle() {
       setIsActive(!isActive)
